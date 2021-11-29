@@ -35,7 +35,7 @@ R_names = ['Argentina','Brazil','Chile','Colombia','Ecuador','Paraguay','Uruguay
 # Data is missing for the following countries in dataset: Bolivia, Peru, Venezuela, French Guiana
 
 def plot_rate_S(df):
-    plt.subplots(figsize=(20,10))
+    plt.subplots(figsize=(15,8))
     df = df.groupby(['Country','year']).mean()
     try:
         for name in R_names:
@@ -52,7 +52,7 @@ R_names_N = ['United States', 'Mexico', 'Canada', 'Guatemala', 'Nicaragua', 'Cos
 # Data is missing for the following countries in dataset: Honduras
 
 def plot_rate_N(df):
-    plt.subplots(figsize=(20,10))
+    plt.subplots(figsize=(15,8))
     df = df.groupby(['Country','year']).mean()
     try:
         for name in R_names_N:
@@ -69,7 +69,7 @@ def plot_rate_N(df):
 names = ['Argentina','Brazil','Bolivia','Chile','Colombia','Ecuador','Peru','Venezuela','Paraguay','Uruguay','Guyana','Suriname','French Guiana']
 
 def plot_happy_S(df):
-    fig, ax = plt.subplots(figsize=(20,10))
+    fig, ax = plt.subplots(figsize=(15,8))
     
     for name in names:
         country = df[df['Country'] == name].set_index('year')['Life Ladder']
@@ -82,7 +82,7 @@ def plot_happy_S(df):
 names_N = ['United States', 'Mexico', 'Canada', 'Guatemala', 'Honduras', 'Nicaragua', 'Costa Rica', 'Panama', 'El Salvador']
 
 def plot_happy_N(df):
-    fig, ax = plt.subplots(figsize=(20,10))
+    fig, ax = plt.subplots(figsize=(15,8))
     
     for name in names_N :
         country = df[df['Country'] == name].set_index('year')['Life Ladder']
@@ -118,7 +118,7 @@ def get_country_overview(country, df1, df2, df3):
     df_20 = df_9[df_9.IndicatorName == 'Access to electricity (% of population)']['Value']
     df_21 = df_9[df_9.IndicatorName == 'People using at least basic drinking water services (% of population)']['Value']
     
-    fig, ax = plt.subplots(figsize=(20,10))
+    fig, ax = plt.subplots(figsize=(15,8))
     ax.plot(df_1, label='Suicide Rate', linewidth=3)
     ax.plot(np.sqrt(np.sqrt(df_2)), label='√GDP Per Capita')
     
