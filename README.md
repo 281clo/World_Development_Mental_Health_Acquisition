@@ -15,13 +15,14 @@ Multiple sources of data, the first being from the World Bank containing over a 
 
 ## Methods
 
-After cleaning, preprocessing, and combining our data, we start with a F_regressor to find the F-statistic and P-values of all our features compared to our target to find which features are most significant for our model. We then utilize Gradiant boost, and RandomForestRegressor to build a inferential model. 
+After cleaning, preprocessing, and combining our data, we start with a F_regressor to find the F-statistic and P-values of all our features compared to our target to find which features are most significant for our model. We then utilize SVR, RandomForestRegressor, and time series to build an inferential model and a predictive model.
 
 
 
 ### Results
 
-The first model was a SVR model with a score of ___. The best and final model was a random forest regression model with a fiarly good accuracy and r2 score. Our features of importances ranged from Urban population growth to freedom to make life choices. 
+
+With the pOur best models came out to a r2 score of .79 and .88 meaning that between our two models 79% and 88% of the variation in suicide rates and happiness scores can be determined by our features. The most significant features in our data were, social support, freedom to make life choices, education, social support, and fixed broadband services. With these features we were able to determine the fluxuation in happiness scores and suicide rates with fairly well accuracy. The World Health Organization can use the model to determine if suicide rates are to increase in a certain country and possibly take action accordanly.
 
 
 ### Visual 1

@@ -26,7 +26,8 @@ def plot_map(df, feature, label, barlabel):
 
     layout = dict(
         title = label,
-        geo = dict(showframe = True))
+        geo = dict(showframe = True, projection = dict(
+            type = 'orthographic')))
 
     w_map = dict( data=data, layout=layout)
     return iplot(w_map, validate=False)
@@ -121,7 +122,7 @@ def get_country_overview(country, df1, df2, df3):
     fig, ax = plt.subplots(figsize=(15,8))
     ax.plot(df_1, label='Suicide Rate', linewidth=3)
     ax.plot(np.sqrt(np.sqrt(df_2)), label='√GDP Per Capita')
-    
+    ax.plot(df_3, label='Happiness Score')
     ax.plot(np.sqrt(df_10), label='√Multilateral Dept')
     ax.plot(df_13, label='Mobile Subscriptions Scaled')
     ax.plot(df_14, label='Broadband Sub')
