@@ -4,12 +4,15 @@ import matplotlib.pyplot as plt
 import numpy as np
 from statistics import mean
 from plotly.offline import download_plotlyjs, plot, iplot
+import streamlit as st
 
 def path(data):
-    
     return '/Users/c-losmc-c/Python Projects/Data/' + data
 
-def plot_map(df, feature, label, barlabel):
+def path2(data):
+    return '/Users/c-losmc-c/Python Projects/World_Development_Mental_Health_Acquisition/Data/' + data
+
+def plot_map(df, feature):
     df = df.groupby(['Country', 'year']).mean()
     
     data = [ dict(
@@ -22,10 +25,10 @@ def plot_map(df, feature, label, barlabel):
             autocolorscale = False,
             reversescale = False,
             marker = dict(line = dict(color = 'rgb(180,500,180)', width = 0.4)),
-            colorbar = dict(autotick = True,title = barlabel))]
+            colorbar = dict(autotick = True,title = feature))]
 
     layout = dict(
-        title = label,
+        title = feature,
         geo = dict(showframe = True, projection = dict(
             type = 'orthographic')))
 

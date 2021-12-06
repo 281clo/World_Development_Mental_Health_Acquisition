@@ -22,7 +22,7 @@ After cleaning, preprocessing, and combining our data, we start with a F_regress
 ### Results
 
 
-With the pOur best models came out to a r2 score of .79 and .88 meaning that between our two models 79% and 88% of the variation in suicide rates and happiness scores can be determined by our features. The most significant features in our data were, social support, freedom to make life choices, education, social support, and fixed broadband services. With these features we were able to determine the fluxuation in happiness scores and suicide rates with fairly well accuracy. The World Health Organization can use the model to determine if suicide rates are to increase in a certain country and possibly take action accordanly.
+With our time series model we have a prediction of lower happiness scores worldwide. Our best inferential models came out to a r2 score of .79 and .88 meaning that between our two models 79% and 88% of the variation in suicide rates and happiness scores can be determined by our features. The most significant features in our data were, social support, freedom to make life choices, education, social support, and fixed broadband services. With these features we were able to determine the fluxuation in happiness scores and suicide rates with fairly well accuracy. The World Health Organization can use the model to determine if suicide rates are to increase in a certain country and possibly take action accordanly.
 
 
 ### Visual 1
