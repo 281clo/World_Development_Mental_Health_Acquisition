@@ -1,42 +1,60 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 import Preparation as prep
 import matplotlib.pyplot as plt
 import plotly.express as px
 from plotly.offline import download_plotlyjs, plot, iplot
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.model_selection import train_test_split
+from statsmodels.tsa.stattools import acf, pacf, adfuller
+from datetime import datetime
+from time import time
+from datetime import timedelta
+from statsmodels.tsa.statespace.sarimax import SARIMAX
+from pandas.plotting import register_matplotlib_converters
+register_matplotlib_converters()
 
 header = st.container()
 dataset = st.container()
 features = st.container()
 countries = st.container()
 modeltraining = st.container()
+time_series = st.container()
 
-st.markdown("""
-<style>
-.deploy {
-background-color: #F5F5F5;
-}
-<style>
-""", unsafe_allow_html=True
-           )
 
-@st.cache(allow_output_mutation=True)
 def get_data(filename):
     RateDf = pd.read_csv(filename)
     return RateDf
 
-@st.cache(allow_output_mutation=True)
+
 def get_data2(filename):
     HappyDf = pd.read_csv(filename)
     return HappyDf
 
-@st.cache(allow_output_mutation=True)
+
 def get_data3(filename):
     WorldDf = pd.read_csv(filename)
     return  WorldDf
 
 with header:
     st.title('Welcome to my World Development Mental Health Acquisition!')
+    st.markdown(
+    """
+    <style>
+    .reportview-container {
+        background: #F5F5F5;
+    }
+   .sidebar .sidebar-content {
+        background: #F5F5F5;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+
+
     st.markdown('The goal is to find contributing factors to mental health worldwide and make predictions on these features to see where the World Health Organization can divert resources to assist in the mental health of people worldwide. ')
     
 with dataset:
@@ -76,28 +94,107 @@ with countries:
     sel_col, disp_col = st.columns(2)
     
     st.header('Explore Data by Country')
-    country = sel_col.selectbox('Pick a country to preview:', options=['United States', 'Japan', 'Russia Federation', 'Mexico', 'Canada', 'Colombia', 'Brazil', 'Chile', 'Argentina', 'Ukraine'], index=0)
-    disp_col.write(prep.get_country_overview(country, RateDf, HappyDf, WorldDf))
-    
+    country = sel_col.selectbox('Pick a country to preview:', options=['United States', 'Japan', 'Russian Federation', 'Mexico', 'Canada', 'Colombia', 'Brazil', 'Chile', 'Argentina', 'Ukraine'], index=0)
+    st.line_chart(prep.get_country_overview2(country, RateDf, HappyDf, WorldDf))
+  
+
     
 with features:
     st.header('Min & Max Preview')
     st.subheader('Top value counts')
-    st.write(RateDf[['Country','suicides/100k pop']].groupby(['Country']).mean().sort_values(by = 'suicides/100k pop', ascending = False).head(10).style.background_gradient(cmap='seismic')), st.write(RateDf[['Country','suicides/100k pop']].groupby(['Country']).mean().sort_values(by = 'suicides/100k pop', ascending = True).head(10).style.background_gradient(cmap='seismic'))
+    col, col2  = st.columns(2)
+    col.write(RateDf[['Country','suicides/100k pop']].groupby(['Country']).mean().sort_values(by = 'suicides/100k pop', ascending = False).head(10).style.background_gradient(cmap='seismic')), col2.write(RateDf[['Country','suicides/100k pop']].groupby(['Country']).mean().sort_values(by = 'suicides/100k pop', ascending = True).head(10).style.background_gradient(cmap='seismic'))
  
   
     
 with modeltraining:
+    AllThree = pd.read_csv(prep.path2('Combined_df.csv'), index_col=['Country', 'year'])
+    
     st.header('Training my model')
     st.text('Here you get to choose the hyperparameters of the model and see how the performance changes.')
     
     sel_col, disp_col = st.columns(2)
     
     max_depth = sel_col.slider('What should be the max_depth of the model?', min_value=10, max_value=100, value=20, step=10)
-    data = sel_col.selectbox('Which Dataset would you like?', options=[(HappyDf), (RateDf)], index=0)
-    features = sel_col.selectbox('What feature would you like to preview?', options=['Life Ladder', 'suicides/100k pop'], index=0)
+    n_estimator = sel_col.selectbox('How many estimators should we use?', options=[1000,10,50,200,500,10000], index=0)
     
-    input_feature = sel_col.text_input('Which feature should be used as the input feature?', 'suicides_no')
-   
+    rf = RandomForestRegressor(random_state=789, n_estimators=n_estimator, min_samples_split=2, max_depth=max_depth)
+
+    y = AllThree["suicides/100k pop"]
+
+    X = AllThree.drop('suicides/100k pop', axis=1)
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=789)
+    rmodel = rf.fit(X_train, y_train)
+    disp_col.markdown('Accuracy Score')
+    disp_col.write(rmodel.score(X_train, y_train))
+    disp_col.markdown('Test Score')
+    disp_col.write(rmodel.score(X_test, y_test))
+
     
+#     input_feature = sel_col.text_input('Which feature should be used as the input feature?', 'suicides_no')
+
+with time_series:
+    st.header('Time Series')
+    sel_col, disp_col = st.columns(2)
+
+    feature = sel_col.selectbox('Which feature would you like to predict?', options=['Life Ladder', 'Log GDP per capita', 'Social support', 'Healthy life expectancy at birth', 'Freedom to make life choices', 'Generosity', 'Perceptions of corruption'], index=0)
     
+
+
+mask = HappyDf.copy()
+mask.reset_index(inplace=True)
+mask.year = mask.year.astype(str)
+mask.year = pd.to_datetime(mask.year)
+mask.set_index('year', inplace=True)
+ts_happ = mask[feature].groupby('year').mean().sort_index().interpolate().loc['2006':'2021']
+p_val = adfuller(ts_happ.diff()[1:])[1]
+print(f"The p-value is {p_val},")
+if p_val < 0.05:
+    print("We can safely assume that the differenced data is stationary.")
+else:
+    print("We cannot reject the null hypothesis that the differenced data is not stationary.")
+ts_happ = ts_happ.resample('M').mean().interpolate()
+world_happ = ts_happ.asfreq(pd.infer_freq(ts_happ.index))
+
+start_date = datetime(2006,1,1)
+end_date = datetime(2021,1,1)
+lim_world_happ = world_happ[start_date:end_date]
+
+train_end = datetime(2018,1,1)
+test_end = datetime(2021,1,1)
+
+train_data = lim_world_happ[:train_end]
+test_data = lim_world_happ[train_end + timedelta(days=1):test_end]
+
+order = (0,1,0)
+seasonal_order = (0, 0, 1, 4)
+
+rolling_predictions = test_data.copy()
+for train_end in test_data.index:
+    train_data = lim_world_happ[:train_end-timedelta(weeks=4)]
+    model = SARIMAX(train_data, order=order, seasonal_order=seasonal_order)
+    model_fit = model.fit()
+
+    pred = model_fit.forecast()
+    rolling_predictions[train_end] = pred
+rolling_residuals = test_data - rolling_predictions
+
+
+plt.figure(figsize=(10,5))
+st.subheader('Original Values')
+st.line_chart(lim_world_happ)
+st.subheader('Predicted Values')
+st.line_chart(rolling_predictions)
+plt.legend(('Data', 'Predictions'), fontsize=16)
+plt.title('World Happiness Scores', fontsize=20)
+plt.ylabel('Scores', fontsize=16)
+for year in range(start_date.year,end_date.year):
+    plt.axvline(pd.to_datetime(str(year)+'-01-01'), color='k', linestyle='--', alpha=0.2)
+st.markdown('Mean Absolute Percent Error:')
+st.write(round(np.mean(abs(rolling_residuals/test_data)),4))
+st.markdown('Root Mean Squared Error')
+st.write(np.sqrt(np.mean(rolling_residuals**2)))
+        
+st.markdown('12 Month Prediction')
+st.write(model_fit.forecast(12))

@@ -37,8 +37,14 @@ To conclude we can see that every country is different and suicide and mental he
 
 ## For More Information
 
+
+
 ## Repository Structure
 
-
+├── code                                <- Folder containing preparation of data, visuals, deployment
+├── data                                <- Folder containing all datasets 
+├── images                              <- Folder containing images used in the notebook 
+├── Final_Notebook.ipynb                <- Final notebook
+├── README.md                           <- The file you're currently reading from
 ```
 
