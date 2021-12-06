@@ -9,8 +9,6 @@ import streamlit as st
 def path(data):
     return '/Users/c-losmc-c/Python Projects/Data/' + data
 
-def path2(data):
-    return '/Users/c-losmc-c/Python Projects/World_Development_Mental_Health_Acquisition/Data/' + data
 
 
 R_names = ['Argentina','Brazil','Chile','Colombia','Ecuador','Paraguay','Uruguay','Guyana','Suriname']

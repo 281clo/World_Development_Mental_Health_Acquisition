@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import Preparation as prep
+import Code.Preparation as prep
 import matplotlib.pyplot as plt
 import plotly.express as px
 from plotly.offline import download_plotlyjs, plot, iplot
@@ -22,20 +22,6 @@ countries = st.container()
 modeltraining = st.container()
 time_series = st.container()
 
-
-def get_data(filename):
-    RateDf = pd.read_csv(filename)
-    return RateDf
-
-
-def get_data2(filename):
-    HappyDf = pd.read_csv(filename)
-    return HappyDf
-
-
-def get_data3(filename):
-    WorldDf = pd.read_csv(filename)
-    return  WorldDf
 
 with header:
     st.title('Welcome to my World Development Mental Health Acquisition!')
@@ -61,11 +47,11 @@ with dataset:
     st.header('World Suicide Rates Preview ')
     st.markdown('This data contains the suicide rates by country referenced from United Nations Development Program, World Health Organization, and the World Bank.')
     
-    RateDf = get_data(prep.path('sucide.csv'))
+    RateDf = pd.read_csv('Data/sucide.csv')
     RateDf = RateDf.rename(columns={'country': 'Country'}).drop(columns='HDI for year')
-    HappyDf = get_data2(prep.path2('CleanedHappy.csv'))
+    HappyDf = pd.read_csv('Data/CleanedHappy.csv')
    
-    WorldDf = get_data3(prep.path2('WorldDf.csv'))
+    WorldDf = pd.read_csv('Data/WorldDf.csv')
 
 
     
@@ -108,7 +94,7 @@ with features:
   
     
 with modeltraining:
-    AllThree = pd.read_csv(prep.path2('Combined_df.csv'), index_col=['Country', 'year'])
+    AllThree = pd.read_csv(('Data/Combined_df.csv'), index_col=['Country', 'year'])
     
     st.header('Training my model')
     st.text('Here you get to choose the hyperparameters of the model and see how the performance changes.')
