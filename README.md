@@ -1,4 +1,4 @@
-![Shutterstock](./Images/shutterstock.png)
+![Shutterstock](./Images/shutterstock.jpg)
 
 # World_Development_Mental_Health_Acquisition
 
