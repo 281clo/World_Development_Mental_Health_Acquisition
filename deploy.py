@@ -24,15 +24,15 @@ time_series = st.container()
 
 
 with header:
-    st.title('Welcome to my World Development Mental Health Acquisition!')
+    st.title('Welcome to the World Development Mental Health Acquisition!')
     st.markdown(
     """
     <style>
     .reportview-container {
-        background: #F5F5F5;
+        background: #C4C4C4;
     }
    .sidebar .sidebar-content {
-        background: #F5F5F5;
+        background: #FFED91;
     }
     </style>
     """,
@@ -44,16 +44,16 @@ with header:
     st.markdown('The goal is to find contributing factors to mental health worldwide and make predictions on these features to see where the World Health Organization can divert resources to assist in the mental health of people worldwide. ')
     
 with dataset:
+    
     st.header('World Suicide Rates Preview ')
     st.markdown('This data contains the suicide rates by country referenced from United Nations Development Program, World Health Organization, and the World Bank.')
     
     RateDf = pd.read_csv('Data/sucide.csv')
     RateDf = RateDf.rename(columns={'country': 'Country'}).drop(columns='HDI for year')
     HappyDf = pd.read_csv('Data/CleanedHappy.csv')
-   
     WorldDf = pd.read_csv('Data/WorldDf.csv')
 
-
+    type_map = st.selectbox('Pick either flat map or 3D map. (Optional)', options=['equirectangular', 'orthographic'], index=0)
     
     fig = px.choropleth(RateDf.sort_values(by='year'),
                     locations="Country",
@@ -62,6 +62,7 @@ with dataset:
                     hover_name="Country",
                     animation_frame="year", 
                     range_color=[20,80],
+                    projection= type_map,
                     )
     st.plotly_chart(fig)
     st.header('World Happiness Scores Preview ')
@@ -73,52 +74,54 @@ with dataset:
                     hover_name="Country",
                     animation_frame="year", 
                     range_color=[2,8],
+                    projection = type_map 
                     )
     st.plotly_chart(fig)
     
 with countries:
-    sel_col, disp_col = st.columns(2)
+    
     
     st.header('Explore Data by Country')
-    country = sel_col.selectbox('Pick a country to preview:', options=['United States', 'Japan', 'Russian Federation', 'Mexico', 'Canada', 'Colombia', 'Brazil', 'Chile', 'Argentina', 'Ukraine'], index=0)
+    country = st.selectbox('Pick a country to preview:', options=['United States', 'Japan', 'Russian Federation', 'Mexico', 'Canada', 'Colombia', 'Brazil', 'Chile', 'Argentina', 'Ukraine'], index=0)
     st.line_chart(prep.get_country_overview2(country, RateDf, HappyDf, WorldDf))
-  
+    st.sidebar.write('Feature Averages: \n\n 1. Suicide Rate Per 100k \n 2. Happiness Score \n 3. Healthy Life Expectancy at Birth \n 4. GDP Per Capita Log \n 5. GNI Per Capita Log \n 6. Inflation \n 7. Foreign Investment \n 8. Perceptions of Corruption % \n 9. Freedom To Make Life Choices \n 10. Generosity \n 11. Social Suport \n 12. Social Safety Net Programs \n 13. Access to Electricity \n 14. Access to Basic Water Services')
+    st.sidebar.write(prep.get_country_overview3(country, RateDf, HappyDf, WorldDf))
 
     
 with features:
     st.header('Min & Max Preview')
     st.subheader('Top value counts')
     col, col2  = st.columns(2)
-    col.write(RateDf[['Country','suicides/100k pop']].groupby(['Country']).mean().sort_values(by = 'suicides/100k pop', ascending = False).head(10).style.background_gradient(cmap='seismic')), col2.write(RateDf[['Country','suicides/100k pop']].groupby(['Country']).mean().sort_values(by = 'suicides/100k pop', ascending = True).head(10).style.background_gradient(cmap='seismic'))
+    col.write(RateDf[['Country','suicides/100k pop']].groupby(['Country']).mean().sort_values(by = 'suicides/100k pop', ascending = False).head(10).style.background_gradient(cmap='seismic'))
+    col2.write(RateDf[['Country','suicides/100k pop']].groupby(['Country']).mean().sort_values(by = 'suicides/100k pop', ascending = True).head(10).style.background_gradient(cmap='seismic'))
  
   
     
 with modeltraining:
     AllThree = pd.read_csv(('Data/Combined_df.csv'), index_col=['Country', 'year'])
     
-    st.header('Training my model')
-    st.text('Here you get to choose the hyperparameters of the model and see how the performance changes.')
+    st.header('Modeling')
+    st.markdown('Infurential model explaining how well our features can predict our target. Here you get to choose the hyperparameters of the model and see how the performance changes.')
     
     sel_col, disp_col = st.columns(2)
-    
+    feat = sel_col.selectbox('Pick a target variable for the model to train on. ("Life Ladder" is the same as Happiness Score)', options=['Life Ladder', 'suicides/100k pop'], index=0)
     max_depth = sel_col.slider('What should be the max_depth of the model?', min_value=10, max_value=100, value=20, step=10)
     n_estimator = sel_col.selectbox('How many estimators should we use?', options=[1000,10,50,200,500,10000], index=0)
     
     rf = RandomForestRegressor(random_state=789, n_estimators=n_estimator, min_samples_split=2, max_depth=max_depth)
 
-    y = AllThree["suicides/100k pop"]
+    y = AllThree[feat]
 
-    X = AllThree.drop('suicides/100k pop', axis=1)
+    X = AllThree.drop(feat, axis=1)
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=789)
     rmodel = rf.fit(X_train, y_train)
-    disp_col.markdown('Accuracy Score')
+    disp_col.text('Accuracy Score')
     disp_col.write(rmodel.score(X_train, y_train))
-    disp_col.markdown('Test Score')
+    disp_col.text('Test Score')
     disp_col.write(rmodel.score(X_test, y_test))
 
-    
-#     input_feature = sel_col.text_input('Which feature should be used as the input feature?', 'suicides_no')
+
 
 with time_series:
     st.header('Time Series')
@@ -134,12 +137,6 @@ mask.year = mask.year.astype(str)
 mask.year = pd.to_datetime(mask.year)
 mask.set_index('year', inplace=True)
 ts_happ = mask[feature].groupby('year').mean().sort_index().interpolate().loc['2006':'2021']
-p_val = adfuller(ts_happ.diff()[1:])[1]
-print(f"The p-value is {p_val},")
-if p_val < 0.05:
-    print("We can safely assume that the differenced data is stationary.")
-else:
-    print("We cannot reject the null hypothesis that the differenced data is not stationary.")
 ts_happ = ts_happ.resample('M').mean().interpolate()
 world_happ = ts_happ.asfreq(pd.infer_freq(ts_happ.index))
 
