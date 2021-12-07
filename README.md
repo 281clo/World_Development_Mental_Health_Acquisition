@@ -49,7 +49,7 @@ For any additional questions, please contact Carlos McCrum.
 
 
 ## Repository Structure
-
+```
 ├── Code                                <- Folder containing preparation of data
 ├── Data                                <- Folder containing all datasets 
 ├── Images                              <- Folder containing images used in the notebook 
