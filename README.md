@@ -21,6 +21,7 @@ Finding the contributing factors to suicide rates by country using, happiness sc
 
 Multiple sources of data, the first being from the World Bank containing over a thousand indicators of economic development worldwide. The second comes from the Gallup World Poll containing the World Happiness Report and is a survey of the state of global happiness. The last is a dataset contains the suicide rates by country referenced from United Nations Development Program, World Health Organization, and the World Bank. The two target variables are 'Life Ladder' (happiness score) from the World Happiness Report and 'suicides/100k pop' from the Suicide Rates dataset. The world development dataset is only being used as a reference to find contributing features to either suicide rates or happiness scores and contains over a thousand indicators by year. 
 
+
 ## Methods
 
 After cleaning, preprocessing, and combining our data, we start with a F_regressor to find the F-statistic and P-values of all our features compared to our target to find which features are most significant for our model. We then utilize SVR, RandomForestRegressor, and time series to build an inferential model and a predictive model.
@@ -44,6 +45,18 @@ To conclude we can see that every country is different and suicide and mental he
 ## For More Information
 
 Please review my full analysis in [Modeling Notebook](./Modeling.ipynb) or my [presentation](./World_Indicators.pdf).
+
+## The Data
+The data used for the project can be found in the data folder, the original data can be found at.
+
+World Development Indicators (https://www.kaggle.com/kaggle/world-development-indicators)
+Suicide Rates Overview (https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016)
+World Happiness Report (https://www.kaggle.com/ajaypalsinghlo/world-happiness-report-2021), (https://www.kaggle.com/unsdsn/world-happiness)
+
+# References
+https://magazine.jhsph.edu/2020/covid-19-and-suicide-crisis-within-crisis
+https://www.who.int/westernpacific/health-topics/mental-health
+
 
 For any additional questions, please contact Carlos McCrum. 
 
