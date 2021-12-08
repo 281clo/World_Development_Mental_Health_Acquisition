@@ -179,5 +179,5 @@ st.write(round(np.mean(abs(rolling_residuals/test_data)),4))
 st.markdown('Root Mean Squared Error')
 st.write(np.sqrt(np.mean(rolling_residuals**2)))
         
-st.markdown('12 Month Prediction')
-st.write(model_fit.forecast(12))
+st.markdown('6 Month Prediction')
+st.write(model_fit.forecast(6))
