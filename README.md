@@ -54,7 +54,8 @@ Suicide Rates Overview (https://www.kaggle.com/russellyates88/suicide-rates-over
 World Happiness Report (https://www.kaggle.com/ajaypalsinghlo/world-happiness-report-2021), (https://www.kaggle.com/unsdsn/world-happiness)
 
 # References
-https://magazine.jhsph.edu/2020/covid-19-and-suicide-crisis-within-crisis
+https://magazine.jhsph.edu/2020/covid-19-and-suicide-crisis-within-crisis,
+
 https://www.who.int/westernpacific/health-topics/mental-health
 
 
