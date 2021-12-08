@@ -71,6 +71,6 @@ For any additional questions, please contact Carlos McCrum.
 ├── README.md                           <- The file you're currently reading from
 ├── deploy.py                           <- Deployment         
 ├── requirements.txt                    <- Requirments for deployment
-├── World_Indicators.pdf                <- PDF version of project presentatio
+├── World_Indicators.pdf                <- PDF version of project presentation
 ```
 
