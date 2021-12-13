@@ -50,7 +50,9 @@ Please review my full analysis in [Modeling Notebook](./Modeling.ipynb) or my [p
 The data used for the project can be found in the data folder, the original data can be found at.
 
 World Development Indicators (https://www.kaggle.com/kaggle/world-development-indicators)
+
 Suicide Rates Overview (https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016)
+
 World Happiness Report (https://www.kaggle.com/ajaypalsinghlo/world-happiness-report-2021), (https://www.kaggle.com/unsdsn/world-happiness)
 
 # References
