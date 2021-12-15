@@ -79,7 +79,14 @@ with countries:
     
     
     st.header('Explore Data by Country')
-    country = st.selectbox('Pick a country to preview:', options=['United States', 'Japan', 'Russian Federation', 'Mexico', 'Canada', 'Colombia', 'Brazil', 'Chile', 'Argentina', 'Ukraine'], index=0)
+    country = st.selectbox('Pick a country to preview:', options=['Albania', 'Antigua and Barbuda', 'Argentina', 'Armenia', 'Aruba', 'Australia', 'Austria', 'Azerbaijan', 'Bahamas', 'Bahrain', 'Barbados', 'Belarus', 'Belgium', 'Belize', 'Bosnia and Herzegovina', 'Brazil', 'Bulgaria', 'Cabo Verde', 'Canada', 'Chile', 'Colombia', 'Costa Rica',
+ 'Croatia', 'Cuba', 'Cyprus', 'Czech Republic', 'Denmark', 'Dominica', 'Ecuador', 'El Salvador', 'Estonia', 'Fiji', 'Finland', 'France', 'Georgia', 'Germany', 'Greece',
+ 'Grenada', 'Guatemala', 'Guyana', 'Hungary', 'Iceland', 'Ireland', 'Israel', 'Italy', 'Jamaica', 'Japan', 'Kazakhstan', 'Kiribati', 'Kuwait', 'Kyrgyzstan', 'Latvia',
+ 'Lithuania', 'Luxembourg', 'Macau', 'Maldives', 'Malta', 'Mauritius', 'Mexico', 'Mongolia', 'Montenegro', 'Netherlands', 'New Zealand', 'Nicaragua', 'Norway', 'Oman',
+ 'Panama', 'Paraguay', 'Philippines', 'Poland', 'Portugal', 'Puerto Rico', 'Qatar', 'Republic of Korea', 'Romania', 'Russian Federation', 'Saint Kitts and Nevis',
+ 'Saint Lucia', 'Saint Vincent and Grenadines', 'San Marino', 'Serbia', 'Seychelles', 'Singapore', 'Slovakia', 'Slovenia', 'South Africa', 'Spain', 'Sri Lanka', 'Suriname',
+ 'Sweden', 'Switzerland', 'Thailand', 'Trinidad and Tobago', 'Turkey', 'Turkmenistan', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'United States', 'Uruguay',
+ 'Uzbekistan'], index=0)
     st.line_chart(prep.get_country_overview2(country, RateDf, HappyDf, WorldDf))
     st.sidebar.write('Feature Averages: \n\n 1. Suicide Rate Per 100k \n 2. Happiness Score \n 3. Healthy Life Expectancy at Birth \n 4. GDP Per Capita Log \n 5. GNI Per Capita Log \n 6. Inflation \n 7. Foreign Investment \n 8. Perceptions of Corruption % \n 9. Freedom To Make Life Choices \n 10. Generosity \n 11. Social Suport \n 12. Social Safety Net Programs \n 13. Access to Electricity \n 14. Access to Basic Water Services')
     st.sidebar.write(prep.get_country_overview3(country, RateDf, HappyDf, WorldDf))
