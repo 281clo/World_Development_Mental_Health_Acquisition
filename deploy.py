@@ -51,7 +51,7 @@ with dataset:
     RateDf = pd.read_csv('Data/sucide.csv')
     RateDf = RateDf.rename(columns={'country': 'Country'}).drop(columns='HDI for year')
     HappyDf = pd.read_csv('Data/CleanedHappy.csv')
-    WorldDf = pd.read_csv('Data/WorlCleanedDf.csv')
+    WorldDf = pd.read_csv('Data/WorldCleanedDf.csv')
 
     type_map = st.selectbox('Pick either flat map or 3D map. (Optional)', options=['equirectangular', 'orthographic'], index=0)
     
