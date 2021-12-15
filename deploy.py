@@ -28,9 +28,6 @@ with header:
     st.markdown(
     """
     <style>
-    .reportview-container {
-        background: #A6A6A6;
-    }
    .sidebar .sidebar-content {
         background: #FFED91;
     }
