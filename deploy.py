@@ -29,7 +29,7 @@ with header:
     """
     <style>
     .reportview-container {
-        background: #C4C4C4;
+        background: #A6A6A6;
     }
    .sidebar .sidebar-content {
         background: #FFED91;
