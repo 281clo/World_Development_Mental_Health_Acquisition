@@ -14,7 +14,7 @@ from datetime import timedelta
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 from pandas.plotting import register_matplotlib_converters
 register_matplotlib_converters()
-import streamlit.components.v1 as components
+
 
 
 
@@ -33,7 +33,7 @@ with header:
         <meta name="image" property="og:image" content="https://raw.githubusercontent.com/281clo/World_Development_Mental_Health_Acquisition/main/Images/map_H.png">
     </head>
     '''
-    components.html(html_string)
+    st.markdown(html_string, unsafe_allow_html=True)
     st.markdown(
     """
     <style>
