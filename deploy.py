@@ -28,7 +28,7 @@ with header:
     st.markdown(
     """
     <head>
-        <meta name="image" property="og:image" content="https://raw.githubusercontent.com/281clo/World_Development_Mental_Health_Acquisition/main/Images/map_H.png" />
+        <<meta name="image" property="og:image" content="https://raw.githubusercontent.com/281clo/World_Development_Mental_Health_Acquisition/main/Images/map_H.png">
     </head>
     <style>
    .sidebar .sidebar-content {
