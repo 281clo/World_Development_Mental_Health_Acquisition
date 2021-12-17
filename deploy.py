@@ -25,11 +25,15 @@ time_series = st.container()
 
 with header:
     st.title('Welcome to the World Development Mental Health Acquisition!')
+    html_string = (
+    '''
+    <head>
+        <meta name="image" property="og:image" content="https://raw.githubusercontent.com/281clo/World_Development_Mental_Health_Acquisition/main/Images/map_H.png">
+    </head>
+    ''')
+    st.markdown(html_string, unsafe_allow_html=True)
     st.markdown(
     """
-    <head>
-        <<meta name="image" property="og:image" content="https://raw.githubusercontent.com/281clo/World_Development_Mental_Health_Acquisition/main/Images/map_H.png">
-    </head>
     <style>
    .sidebar .sidebar-content {
         background: #FFED91;
