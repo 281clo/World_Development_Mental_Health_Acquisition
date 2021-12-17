@@ -14,6 +14,9 @@ from datetime import timedelta
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 from pandas.plotting import register_matplotlib_converters
 register_matplotlib_converters()
+import streamlit.components.v1 as components
+
+
 
 header = st.container()
 dataset = st.container()
@@ -25,13 +28,12 @@ time_series = st.container()
 
 with header:
     st.title('Welcome to the World Development Mental Health Acquisition!')
-    html_string = (
-    '''
+    html_string = '''
     <head>
         <meta name="image" property="og:image" content="https://raw.githubusercontent.com/281clo/World_Development_Mental_Health_Acquisition/main/Images/map_H.png">
     </head>
-    ''')
-    st.markdown(html_string, unsafe_allow_html=True)
+    '''
+    components.html(html_string)
     st.markdown(
     """
     <style>
